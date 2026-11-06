@@ -1,0 +1,7 @@
+//
+// Do any local configuration here
+//
+zone "innovate.lab" {
+	type primary;
+	file "/etc/bind/db.innovate.lab";
+};

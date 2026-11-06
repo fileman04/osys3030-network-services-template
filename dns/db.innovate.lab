@@ -1,0 +1,24 @@
+;
+; BIND data file for innovate.lab
+;
+$TTL    604800
+@       IN      SOA     ns1.innovate.lab. admin.innovate.lab. (
+                              5         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      ns1.innovate.lab.
+@	IN	TXT	"v=spf1 include:_spf.google.com ~all"
+; A and AAAA records for our nameserver
+ns1     IN      A       10.20.0.38
+ns1     IN      AAAA    ::1
+
+; Other records for our zone
+www     IN      A       10.20.0.38
+web	IN	A	10.20.0.38
+app	IN	A	10.20.0.38
+resolver IN     CNAME   ns1.innovate.lab.
+api     IN      A       10.20.0.38
+*	IN	A	10.10.10.50
