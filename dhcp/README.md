@@ -1,17 +1,19 @@
 # Kea DHCPv4 Server Guide
 
 ## 1. Overview
-Document your modern ISC Kea DHCPv4 configuration. Kea allocates dynamic IPv4 addresses to client devices on your isolated private VLAN (`ens19`).
+This server provides Dynamic Host Configuration Protocol (DHCP) services to clients on the internal LAN network using Kea DHCPv4. The service automatically assigns IP addresses and distributes required network information including the default gateway, DNS server address, and subnet mask.
+
+The DHCP service supports the internal client subnet and works alongside the BIND9 DNS service and UFW/NAT routing configuration
 
 ## 2. Configuration Files Included
 * `kea-dhcp4.conf`: Configuration file for `/etc/kea/kea-dhcp4.conf`.
 
 ## 3. Scope & Option Architecture
 * **Listening Interface:** `ens19` (bound exclusively to LAN).
-* **Subnet:** `10.<YourID>.0.0/24`
-* **Dynamic Pool:** `10.<YourID>.0.10 - 10.<YourID>.0.200`
-* **Default Router (Option 3):** `10.<YourID>.0.250` (Server `ens19` IP)
-* **Domain Name Server (Option 6):** `10.<YourID>.0.250` (Internal BIND9 IP)
+* **Subnet:** `172.168.0.0/24`
+* **Dynamic Pool:** `172.168.0.100 - 172.168.0.200`
+* **Default Router (Option 3):** `172.168.0.250` (Server `ens19` IP)
+* **Domain Name Server (Option 6):** `172.168.0.250` (Internal BIND9 IP)
 
 ## 4. Recovery & Deployment Steps
 ```bash
@@ -31,7 +33,7 @@ sudo systemctl enable kea-dhcp4-server
 ```
 
 ## 5. Client Verification & Alpine Linux Notes
-On your **Alpine Linux Client VM** (`OSYS3030-<username>-client` / VM `91<ID>`):
+On your **Alpine Linux Client VM** (`OSYS3030-william.mcnea-client` / VM `9116`):
 
 > [!NOTE]
 > Alpine Linux uses BusyBox `udhcpc`. BusyBox requires `eth0` to be administratively `UP` before broadcasting!
