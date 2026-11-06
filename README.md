@@ -1,8 +1,8 @@
 # OSYS3030 - Linux Network Appliance Documentation
 
-> **Student Name:** [Your Name]  
-> **Student ID / VMID:** [e.g., 106]  
-> **Repository:** [Public GitHub URL]  
+> **Student Name:** William McNea  
+> **Student ID / VMID:** 0421151/116  
+> **Repository:** https://github.com/fileman04/osys3030-network-services-template.git  
 > **Instructor:** Matt Redmond  
 > **Course:** OSYS3030 - Network Services Using Linux  
 
@@ -12,7 +12,7 @@
 A high-level summary of your multi-homed Linux server appliance, its purpose, and its role as a gateway/router for the private internal network.
 
 * **Operating System:** Ubuntu Server 24.04 LTS (Noble Numbat)
-* **Hostname:** `server-[YourID]` (e.g., `robserver`)
+* **Hostname:** `ubuntu-server-willm`
 * **Primary Roles:**
   * Router & Firewall (UFW + iptables NAT masquerading)
   * Recursive & Authoritative DNS (BIND9)
@@ -36,25 +36,25 @@ A high-level summary of your multi-homed Linux server appliance, its purpose, an
                        |      (Your Appliance)   |
                        +------------+------------+
                                  [ens19]
-                                    | (10.<ID>.0.250/24)
+                                    | (172.168.0.250/24)
                                     |
               +---------------------+--------------------+
               |        Isolated Private VLAN (vmbr5)      |
-              |             10.<ID>.0.0/24               |
+              |             172.168.0.0/24               |
               +---------------------+--------------------+
                                     |
-                                    | (DHCP: 10.<ID>.0.10 - .200)
+                                    | (DHCP: 172.168.0.1 - .200)
                                  [eth0]
                        +------------+------------+
                        |    Alpine Client VM     |
-                       |       (VM 91<ID>)       |
+                       |       (VM 9116)       |
                        +-------------------------+
 ```
 
 | Interface | Network Zone | IP Address / Subnet | Purpose |
 | :--- | :--- | :--- | :--- |
-| `ens18` | WAN / External | `10.20.1.<ID>/23` | Upstream internet & SSH management |
-| `ens19` | LAN / Internal | `10.<ID>.0.250/24` | Default gateway & service binding for clients |
+| `ens18` | WAN / External | `10.20.0.38/23` | Upstream internet & SSH management |
+| `ens19` | LAN / Internal | `172.168.0.250/24` | Default gateway & service binding for clients |
 
 ---
 
