@@ -1,7 +1,15 @@
 # Firewall & NAT Masquerade Gateway Guide
 
 ## 1. Overview
-Document your security policy using **UFW** (Uncomplicated Firewall) and packet forwarding with **iptables NAT masquerading**. This transforms your Linux server into a secure router allowing private LAN clients on `ens19` to access the internet via `ens18`.
+This server functions as the network gateway between the WAN and internal LAN. UFW (Uncomplicated Firewall) is used to enforce firewall policies while iptables NAT masquerading provides internet access for clients on the internal network.
+
+Services protected by the firewall include:
+
+SSH administration
+BIND9 DNS
+Kea DHCPv4
+NAT/PAT routing between WAN and LAN
+The firewall is configured to deny unsolicited inbound traffic while allowing required administration and network services.
 
 ## 2. Configuration Files Included
 * `before.rules`: Custom iptables rules placed at the top of `/etc/ufw/before.rules` to enable NAT masquerading.
@@ -26,7 +34,7 @@ Add the `*nat` table block before the `*filter` block:
 :POSTROUTING ACCEPT [0:0]
 
 # Forward traffic from LAN (ens19) out WAN (ens18)
--A POSTROUTING -s 10.<YourID>.0.0/24 -o ens18 -j MASQUERADE
+-A POSTROUTING -s 172.168.0.0/24 -o ens18 -j MASQUERADE
 
 # Commit the NAT rules
 COMMIT
@@ -51,7 +59,7 @@ sudo ufw enable
 ## 6. Verification & Troubleshooting
 * Check firewall status: `sudo ufw status verbose`
 * Check active NAT masquerading rules: `sudo iptables -t nat -L -v -n`
-* From Alpine Client VM (`91<ID>`):
+* From Alpine Client VM (`9116`):
   ```bash
   # Must succeed if NAT is functional:
   ping -c 3 8.8.8.8
